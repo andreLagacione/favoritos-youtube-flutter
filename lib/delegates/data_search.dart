@@ -21,13 +21,6 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   Widget buildLeading(BuildContext context) {
-    Future.delayed(Duration.zero).then((_) => close(context, query));
-    return Container();
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    print('buildResults');
     return IconButton(
       icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
@@ -40,12 +33,16 @@ class DataSearch extends SearchDelegate<String> {
   }
 
   @override
+  Widget buildResults(BuildContext context) {
+    Future.delayed(Duration.zero).then((_) => close(context, query));
+    return Container();
+  }
+
+  @override
   Widget buildSuggestions(BuildContext context) {
     if (query.isEmpty) {
       return Container();
     } else {
-      print('query');
-      print(query);
       return FutureBuilder<List>(
         future: suggestions(query),
         builder: (context, snapshot) {
@@ -78,7 +75,9 @@ class DataSearch extends SearchDelegate<String> {
     );
 
     if (response.statusCode == 200) {
-      return json.decode(response.body)[1].map((v) => v[0]).toList();
+      return json.decode(response.body)[1].map((v) {
+        return v[0];
+      }).toList();
     } else {
       throw Exception('Failed to load suggestions');
     }

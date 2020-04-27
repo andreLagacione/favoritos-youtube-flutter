@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class DataSearch extends SearchDelegate<String> {
-  @override
-  String query;
 
   @override
   List<Widget> buildActions(BuildContext context) {
